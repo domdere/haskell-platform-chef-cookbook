@@ -40,7 +40,9 @@ local_tarball = File.join(td, "haskell-platform-#{node.haskell.platform.version}
 remote_file(local_tarball) do
   source "http://lambda.haskell.org/platform/download/#{node.haskell.platform.version}/haskell-platform-#{node.haskell.platform.version}.tar.gz"
 
-  not_if installed_already or ::File.exists?(local_tarball)
+  not_if do
+    installed_already or ::File.exists?(local_tarball)
+  end
 end
 
 # 2. Extract it
@@ -69,5 +71,7 @@ bash "build and install Haskell Platform" do
 
   creates cabal_file
 
-  not_if installed_already
+  not_if do
+    installed_already
+  end
 end
