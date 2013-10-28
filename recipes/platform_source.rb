@@ -67,7 +67,7 @@ bash "build and install Haskell Platform" do
     cabal install hunit c2hs
   EOS
 
-  creates "/usr/local/bin/cabal"
+  creates cabal_file
 
   not_if installed_already
 end
