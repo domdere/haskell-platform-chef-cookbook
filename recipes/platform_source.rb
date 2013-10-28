@@ -30,13 +30,17 @@ end
 
 require "tmpdir"
 
+cabal_file = '/usr/local/bin/cabal'
+
+installed_already = ::File.exists?(cabal_file)
+
 td            = Dir.tmpdir
 local_tarball = File.join(td, "haskell-platform-#{node.haskell.platform.version}.tar.gz")
 
 remote_file(local_tarball) do
   source "http://lambda.haskell.org/platform/download/#{node.haskell.platform.version}/haskell-platform-#{node.haskell.platform.version}.tar.gz"
 
-  not_if "test -f #{local_tarball}"
+  not_if installed_already or ::File.exists?(local_tarball)
 end
 
 # 2. Extract it
@@ -64,4 +68,6 @@ bash "build and install Haskell Platform" do
   EOS
 
   creates "/usr/local/bin/cabal"
+
+  not_if installed_already
 end

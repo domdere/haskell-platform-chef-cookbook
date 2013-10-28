@@ -11,6 +11,7 @@ is prepended to PATH via a shell script installed under `/etc/profile.d/`.
 
 This cookbook currently provides
 
+ * GHC 7.6.3 with Platform 2013.2.0.0 (set `node[:ghc][:version]` to **7.6.3** and `node[:haskell][:platform][:version]` to **2013.02.0.0**)
  * GHC 7.6 with Platform 2012.02
  * GHC 7.4 with Platform 2012.02
  * GHC 7.0 with Platform 2011.02.
