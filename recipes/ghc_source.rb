@@ -50,10 +50,16 @@ require "tmpdir"
 td            = Dir.tmpdir
 local_tarball = File.join(td, "ghc-#{node.ghc.version}-#{node.ghc.arch}-unknown-linux.tar.bz2")
 
-remote_file(local_tarball) do
-  source "#{node.ghc.source_base_url}/#{node.ghc.version}/ghc-#{node.ghc.version}-#{node.ghc.arch}-unknown-linux.tar.bz2"
+source_url = if node.ghc.source_url.nil? then
+    "http://www.haskell.org/ghc/dist/#{node.ghc.version}/ghc-#{node.ghc.version}-#{node.ghc.arch}-unknown-linux.tar.bz2"
+else
+    node.ghc.source_url
+end
 
-  not_if "test -f #{local_tarball} || ghc --version | grep #{node.ghc.version}"
+remote_file(local_tarball) do
+  source    source_url
+
+  not_if    "test -f #{local_tarball} || ghc --version | grep #{node.ghc.version}"
 end
 
 # 2. Extract it
