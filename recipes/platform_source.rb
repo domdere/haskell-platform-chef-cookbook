@@ -38,7 +38,7 @@ td            = Dir.tmpdir
 local_tarball = File.join(td, "haskell-platform-#{node.haskell.platform.version}.tar.gz")
 
 remote_file(local_tarball) do
-  source "http://lambda.haskell.org/platform/download/#{node.haskell.platform.version}/haskell-platform-#{node.haskell.platform.version}.tar.gz"
+  source "#{node.haskell.platform.source_base_url}/#{node.haskell.platform.version}/haskell-platform-#{node.haskell.platform.version}.tar.gz"
 
   not_if do
     installed_already or ::File.exists?(local_tarball)
