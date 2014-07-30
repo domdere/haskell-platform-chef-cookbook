@@ -42,6 +42,12 @@ when ["ubuntu", "12.04"] then
 
     not_if "test -L /usr/lib/libgmp.so.3"
   end
+when ["ubuntu", "14.04"] then
+  %w( haskell-platform git autoconf automake libtool make ncurses-dev g++ llvm ).each do |pkg|
+    package(pkg) do
+      action :install
+    end
+  end
 end
 
 
